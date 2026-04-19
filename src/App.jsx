@@ -7,17 +7,17 @@ import User from "./Pages/User";
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar>
-        <Routes>
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-          <Route path="/" element{<Home feed='top' />} />
-        </Routes>
-      </Navbar>
+      <Navbar />
+      <Routes>
+        <Route path="/"         element={<Home feed='top' />} />
+        <Route path="/new"      element={<Home feed='new' />} />
+        <Route path="/ask"      element={<Home feed='ask' />} />
+        <Route path="/show"     element={<Home feed='show' />} />
+        <Route path="/jobs"     element={<Home feed='job' />} />
+        <Route path="/item/:id" element={<Story />} />
+        <Route path="/user/:id" element={<User />} />
+        <Route path="*"         element={<Home feed='top' />} />
+      </Routes>
     </BrowserRouter>
   );
 }
