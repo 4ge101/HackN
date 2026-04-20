@@ -2,11 +2,11 @@ import { NavLink } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
 const LINKS = [
-  { to: '/',     label: 'top',  end: true },
-  { to: '/new',  label: 'new'  },
-  { to: '/ask',  label: 'ask'  },
-  { to: '/show', label: 'show' },
-  { to: '/jobs', label: 'jobs' },
+  { to: '/',     label: 'Top',  end: true },
+  { to: '/new',  label: 'New'  },
+  { to: '/ask',  label: 'Ask'  },
+  { to: '/show', label: 'Show' },
+  { to: '/jobs', label: 'Jobs' },
 ]
 
 export default function Navbar() {
@@ -27,14 +27,14 @@ export default function Navbar() {
           </NavLink>
         ))}
       </div>
-      <a
+      {/* <a
         href="https://news.ycombinator.com/submit"
         target="_blank"
         rel="noreferrer"
         className={styles.submit}
       >
         submit
-      </a>
+      </a> */}
     </nav>
   )
 }
