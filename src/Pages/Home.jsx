@@ -1,10 +1,9 @@
 import { useStories } from "../hooks/useStories";
 import StoryList from "../components/StoryList";
+import Sidebar from "../components/Sidebar";
 
 export default function Home({ feed }) {
   const { stories, loading, error, hasMore, loadMore } = useStories(feed);
-
-  console.log("stories:", stories.length, "loading:", loading, "error:", error);
 
   if (error) {
     return (
@@ -15,21 +14,21 @@ export default function Home({ feed }) {
   }
 
   return (
-    <div
-      style={{
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#000' }}>
+      <Sidebar />
+      <div style={{
+        flex: 1,
         maxWidth: 860,
-        margin: "0 auto",
-        background: "#000000",
-        color: "#fff",
-        minHeight: "100vh",
-      }}
-    >
-      <StoryList
-        stories={stories}
-        loading={loading}
-        hasMore={hasMore}
-        onLoadMore={loadMore}
-      />
+        color: '#fff',
+        minHeight: '100vh',
+      }}>
+        <StoryList
+          stories={stories}
+          loading={loading}
+          hasMore={hasMore}
+          onLoadMore={loadMore}
+        />
+      </div>
     </div>
   );
 }
