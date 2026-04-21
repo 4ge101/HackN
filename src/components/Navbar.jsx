@@ -27,7 +27,6 @@ export default function Navbar({ theme, query, onSearch }) {
         HN
       </Link>
 
-      {/* Search bar */}
       <div style={{ flex: 1, maxWidth: 480 }}>
         <input
           type="text"
@@ -48,7 +47,6 @@ export default function Navbar({ theme, query, onSearch }) {
         />
       </div>
 
-      {/* Keyboard shortcuts hint */}
       <div style={{
         fontSize: 11,
         color: isDark ? '#333' : '#bbb',

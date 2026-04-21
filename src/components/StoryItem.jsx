@@ -59,7 +59,6 @@ export default function StoryItem({ story, rank, theme }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Rank */}
       <div style={{
         fontSize: 14,
         color: isDark ? '#444' : '#bbb',
@@ -70,7 +69,6 @@ export default function StoryItem({ story, rank, theme }) {
         {rank}.
       </div>
 
-      {/* Main content */}
       <div>
         <div style={{ marginBottom: 6, display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 6 }}>
           <span
@@ -104,12 +102,12 @@ export default function StoryItem({ story, rank, theme }) {
           alignItems: 'center',
           color: isDark ? '#555' : '#999',
         }}>
-          <span style={{ color: '#ff8500', fontWeight: 600 }}>
+          <span style={{ color: 'var(--primary-color)', fontWeight: 600 }}>
             ▲ <AnimatedNumber value={story.score ?? 0} />
           </span>
           <span>·</span>
           <span
-            style={{ color: '#ff8500', cursor: 'pointer' }}
+            style={{ color: 'var(--primary-color)', cursor: 'pointer' }}
             onClick={() => navigate(`/user/${story.by}`)}
           >
             {story.by}
@@ -126,7 +124,6 @@ export default function StoryItem({ story, rank, theme }) {
         </div>
       </div>
 
-      {/* Action icons */}
       <div style={{
         display: 'flex',
         flexDirection: 'column',
@@ -136,7 +133,6 @@ export default function StoryItem({ story, rank, theme }) {
         opacity: hovered ? 1 : 0,
         transition: 'opacity 0.15s',
       }}>
-        {/* Bookmark */}
         <button
           title="Bookmark (b)"
           onClick={() => bookmarks.toggle(story)}
@@ -145,7 +141,7 @@ export default function StoryItem({ story, rank, theme }) {
             border: 'none',
             cursor: 'pointer',
             fontSize: 16,
-            color: isBookmarked ? '#ff8500' : isDark ? '#444' : '#ccc',
+            color: isBookmarked ? 'var(--primary-color)' : isDark ? '#444' : '#ccc',  // ← was '#ff8500'
             padding: 4,
             lineHeight: 1,
             transition: 'color 0.15s, transform 0.1s',
@@ -155,7 +151,6 @@ export default function StoryItem({ story, rank, theme }) {
           {isBookmarked ? '♥' : '♡'}
         </button>
 
-        {/* Favourite */}
         <button
           title="Favourite"
           onClick={() => favourites.toggle(story)}
@@ -164,7 +159,7 @@ export default function StoryItem({ story, rank, theme }) {
             border: 'none',
             cursor: 'pointer',
             fontSize: 16,
-            color: isFavourited ? '#ff8500' : isDark ? '#444' : '#ccc',
+            color: isFavourited ? 'var(--primary-color)' : isDark ? '#444' : '#ccc',  // ← was '#ff8500'
             padding: 4,
             lineHeight: 1,
             transition: 'color 0.15s, transform 0.1s',
