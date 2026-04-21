@@ -1,27 +1,54 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./Pages/Home";
-import Story from "./Pages/Story";
-import User from "./Pages/User";
-import Saved from "./Pages/Saved";
-import Settings from "./Pages/Settings";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import Home from './Pages/Home'
+import Story from './Pages/Story'
+import User from './Pages/User'
+import Saved from './Pages/Saved'
+import Favourites from './Pages/Favourites'
+import Settings from './Pages/Settings'
+import { useTheme } from './hooks/useTheme'
+import { useSearch } from './hooks/useSearch'
 
 export default function App() {
+  const { theme, toggle, isDark } = useTheme()
+  const [query, setQuery] = useState('')
+
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home feed="top" />} />
-        <Route path="/new" element={<Home feed="new" />} />
-        <Route path="/ask" element={<Home feed="ask" />} />
-        <Route path="/show" element={<Home feed="show" />} />
-        <Route path="/jobs" element={<Home feed="job" />} />
-        <Route path="/saved" element={<Saved />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/item/:id" element={<Story />} />
-        <Route path="/user/:id" element={<User />} />
-        <Route path="*" element={<Home feed="top" />} />
-      </Routes>
+      <div style={{
+        minHeight: '100vh',
+        background: isDark ? '#000' : '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+      }}>
+        {/* Top navbar */}
+        <Navbar
+          theme={theme}
+          query={query}
+          onSearch={setQuery}
+        />
+
+        {/* Body: sidebar + page */}
+        <div style={{ display: 'flex', flex: 1 }}>
+          <Sidebar theme={theme} onThemeToggle={toggle} />
+
+          <Routes>
+            <Route path="/"           element={<Home feed="top"  theme={theme} query={query} setQuery={setQuery} />} />
+            <Route path="/new"        element={<Home feed="new"  theme={theme} query={query} setQuery={setQuery} />} />
+            <Route path="/ask"        element={<Home feed="ask"  theme={theme} query={query} setQuery={setQuery} />} />
+            <Route path="/show"       element={<Home feed="show" theme={theme} query={query} setQuery={setQuery} />} />
+            <Route path="/jobs"       element={<Home feed="job"  theme={theme} query={query} setQuery={setQuery} />} />
+            <Route path="/saved"      element={<Saved       theme={theme} />} />
+            <Route path="/favourites" element={<Favourites  theme={theme} />} />
+            <Route path="/settings"   element={<Settings    theme={theme} onThemeToggle={toggle} />} />
+            <Route path="/item/:id"   element={<Story       theme={theme} />} />
+            <Route path="/user/:id"   element={<User        theme={theme} />} />
+            <Route path="*"           element={<Home feed="top"  theme={theme} />} />
+          </Routes>
+        </div>
+      </div>
     </BrowserRouter>
-  );
+  )
 }
