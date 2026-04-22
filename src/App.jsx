@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import PWABanner from './components/PWABanner'
 import Home from './Pages/Home'
 import Story from './Pages/Story'
 import User from './Pages/User'
@@ -9,7 +10,6 @@ import Saved from './Pages/Saved'
 import Favourites from './Pages/Favourites'
 import Settings from './Pages/Settings'
 import { useTheme } from './hooks/useTheme'
-import { useSearch } from './hooks/useSearch'
 
 export default function App() {
   const { theme, toggle, isDark } = useTheme()
@@ -23,14 +23,8 @@ export default function App() {
         display: 'flex',
         flexDirection: 'column',
       }}>
-        {/* Top navbar */}
-        <Navbar
-          theme={theme}
-          query={query}
-          onSearch={setQuery}
-        />
+        <Navbar theme={theme} query={query} onSearch={setQuery} />
 
-        {/* Body: sidebar + page */}
         <div style={{ display: 'flex', flex: 1 }}>
           <Sidebar theme={theme} onThemeToggle={toggle} />
 
@@ -48,6 +42,9 @@ export default function App() {
             <Route path="*"           element={<Home feed="top"  theme={theme} />} />
           </Routes>
         </div>
+
+        {/* PWA banners - install, offline, update */}
+        <PWABanner theme={theme} />
       </div>
     </BrowserRouter>
   )
