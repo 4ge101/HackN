@@ -1,14 +1,11 @@
-import CommentItem from './CommentItem'
-import Spinner from '../ui/Spinner'
-import styles from './CommentTree.module.css'
+import CommentItem from "./CommentItem";
+import Spinner from "../ui/Spinner";
 
 export default function CommentTree({ comments, loading }) {
-  if (loading) return <Spinner />
+  if (loading) return <Spinner />;
 
   if (!comments || comments.length === 0) {
-    return (
-      <p className={styles.empty}>no comments yet</p>
-    )
+    return <p className={styles.empty}>no comments yet</p>;
   }
 
   return (
@@ -17,5 +14,5 @@ export default function CommentTree({ comments, loading }) {
         <CommentItem key={comment.id} comment={comment} depth={0} />
       ))}
     </div>
-  )
+  );
 }

@@ -1,35 +1,38 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { useComments } from '../hooks/useComments'
-import { timeAgo } from '../utils/timeAgo'
-import { formatUrl } from '../utils/formatUrl'
-import { sanitizeHtml } from '../utils/sanitizeHtml'
-import CommentTree from '../components/CommentTree'
-import Spinner from '../ui/Spinner'
-import styles from './Story.module.css'
+import { useParams, useNavigate } from "react-router-dom";
+import { useComments } from "../hooks/useComments";
+import { timeAgo } from "../utils/timeAgo";
+import { formatUrl } from "../utils/formatUrl";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
+import CommentTree from "../components/CommentTree";
+import Spinner from "../ui/Spinner";
 
 export default function Story() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { story, comments, loading, error } = useComments(id)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { story, comments, loading, error } = useComments(id);
 
-  if (loading && !story) return <div className={styles.wrap}><Spinner /></div>
+  if (loading && !story)
+    return (
+      <div className={styles.wrap}>
+        <Spinner />
+      </div>
+    );
 
   if (error) {
     return (
       <div className={styles.wrap}>
         <p className={styles.error}>failed to load story: {error.message}</p>
       </div>
-    )
+    );
   }
 
-  if (!story) return null
+  if (!story) return null;
 
-  const domain = formatUrl(story.url)
+  const domain = formatUrl(story.url);
 
   return (
     <div className={styles.wrap}>
       <div className={styles.container}>
-
         <button className={styles.back} onClick={() => navigate(-1)}>
           ← back
         </button>
@@ -51,7 +54,7 @@ export default function Story() {
           <span className={styles.points}>▲ {story.score}</span>
           <span className={styles.sep}>·</span>
           <span>
-            by{' '}
+            by{" "}
             <span
               className={styles.user}
               onClick={() => navigate(`/user/${story.by}`)}
@@ -77,5 +80,5 @@ export default function Story() {
         <CommentTree comments={comments} loading={loading} />
       </div>
     </div>
-  )
+  );
 }

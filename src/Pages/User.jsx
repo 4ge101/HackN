@@ -1,29 +1,32 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { useUser } from '../hooks/useUser'
-import { timeAgo } from '../utils/timeAgo'
-import { sanitizeHtml } from '../utils/sanitizeHtml'
-import Spinner from '../ui/Spinner'
-import styles from './User.module.css'
+import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
+import { timeAgo } from "../utils/timeAgo";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
+import Spinner from "../ui/Spinner";
 
 export default function User() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const { user, loading, error } = useUser(id)
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { user, loading, error } = useUser(id);
 
-  if (loading) return <div className={styles.wrap}><Spinner /></div>
+  if (loading)
+    return (
+      <div className={styles.wrap}>
+        <Spinner />
+      </div>
+    );
 
   if (error || !user) {
     return (
       <div className={styles.wrap}>
         <p className={styles.error}>user not found</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className={styles.wrap}>
       <div className={styles.container}>
-
         <button className={styles.back} onClick={() => navigate(-1)}>
           ← back
         </button>
@@ -49,11 +52,15 @@ export default function User() {
 
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <span className={styles.statVal}>{user.karma?.toLocaleString()}</span>
+            <span className={styles.statVal}>
+              {user.karma?.toLocaleString()}
+            </span>
             <span className={styles.statLabel}>karma</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statVal}>{user.submitted?.length?.toLocaleString() ?? 0}</span>
+            <span className={styles.statVal}>
+              {user.submitted?.length?.toLocaleString() ?? 0}
+            </span>
             <span className={styles.statLabel}>submissions</span>
           </div>
           <div className={styles.stat}>
@@ -73,5 +80,5 @@ export default function User() {
         )}
       </div>
     </div>
-  )
+  );
 }

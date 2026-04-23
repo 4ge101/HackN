@@ -1,22 +1,18 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { timeAgo } from '../utils/timeAgo'
-import { sanitizeHtml } from '../utils/sanitizeHtml'
-import styles from './CommentItem.module.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { timeAgo } from "../utils/timeAgo";
+import { sanitizeHtml } from "../utils/sanitizeHtml";
 
 export default function CommentItem({ comment, depth = 0 }) {
-  const [collapsed, setCollapsed] = useState(false)
-  const navigate = useNavigate()
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
-  if (!comment || comment.deleted || comment.dead) return null
+  if (!comment || comment.deleted || comment.dead) return null;
 
-  const hasChildren = comment.children && comment.children.length > 0
+  const hasChildren = comment.children && comment.children.length > 0;
 
   return (
-    <div
-      className={styles.comment}
-      style={{ marginLeft: depth > 0 ? 20 : 0 }}
-    >
+    <div className={styles.comment} style={{ marginLeft: depth > 0 ? 20 : 0 }}>
       <div className={styles.header}>
         <span
           className={styles.user}
@@ -29,7 +25,7 @@ export default function CommentItem({ comment, depth = 0 }) {
           className={styles.toggle}
           onClick={() => setCollapsed((c) => !c)}
         >
-          {collapsed ? `[+${countDescendants(comment)}]` : '[-]'}
+          {collapsed ? `[+${countDescendants(comment)}]` : "[-]"}
         </button>
       </div>
 
@@ -42,24 +38,17 @@ export default function CommentItem({ comment, depth = 0 }) {
           {hasChildren && (
             <div className={styles.children}>
               {comment.children.map((child) => (
-                <CommentItem
-                  key={child.id}
-                  comment={child}
-                  depth={depth + 1}
-                />
+                <CommentItem key={child.id} comment={child} depth={depth + 1} />
               ))}
             </div>
           )}
         </>
       )}
     </div>
-  )
+  );
 }
 
 function countDescendants(comment) {
-  if (!comment.children || comment.children.length === 0) return 0
-  return comment.children.reduce(
-    (acc, c) => acc + 1 + countDescendants(c),
-    0
-  )
+  if (!comment.children || comment.children.length === 0) return 0;
+  return comment.children.reduce((acc, c) => acc + 1 + countDescendants(c), 0);
 }
