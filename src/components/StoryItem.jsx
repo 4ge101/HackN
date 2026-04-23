@@ -6,6 +6,7 @@ import { useBookmarks, useFavourites } from '../hooks/useBookmarks';
 import { useNotes } from '../hooks/useNotes';
 import NoteModal from './NoteModal';
 import NoteIcon from '../assets/icons/note.svg';
+import BookMarkIcon from '../assets/icons/book-mark.svg';
 
 function AnimatedNumber({ value }) {
   return <span>{value}</span>
@@ -43,7 +44,7 @@ export default function StoryItem({ story, rank, theme }) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-    
+        {/* Rank */}
         <div style={{
           fontSize: 14,
           color: isDark ? '#444' : '#bbb',
@@ -54,6 +55,7 @@ export default function StoryItem({ story, rank, theme }) {
           {rank}.
         </div>
 
+        {/* Main content */}
         <div>
           <div style={{ marginBottom: 6, display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: 6 }}>
             <span
@@ -69,6 +71,7 @@ export default function StoryItem({ story, rank, theme }) {
             {domain && (
               <span style={{ fontSize: 11, color: isDark ? '#444' : '#bbb' }}>({domain})</span>
             )}
+
             {hasNoteFlag && (
               <span
                 onClick={() => setShowNote(true)}
@@ -110,6 +113,7 @@ export default function StoryItem({ story, rank, theme }) {
           </div>
         </div>
 
+        {/* Action icons */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -119,7 +123,7 @@ export default function StoryItem({ story, rank, theme }) {
           opacity: hovered || hasNoteFlag || isBookmarked || isFavourited ? 1 : 0,
           transition: 'opacity 0.15s',
         }}>
-          
+          {/* Note */}
           <button
             title="Add note"
             onClick={() => setShowNote(true)}
@@ -130,9 +134,18 @@ export default function StoryItem({ story, rank, theme }) {
               padding: 4,
             }}
           >
-            <img src={NoteIcon} alt="note icon" />
+            <img
+              src={NoteIcon}
+              alt="note"
+              style={{
+                width: 18,
+                height: 18,
+                opacity: hasNoteFlag ? 1 : 0.6,
+              }}
+            />
           </button>
 
+          {/* Bookmark */}
           <button
             title="Bookmark (b)"
             onClick={() => bookmarks.toggle(story)}
@@ -142,22 +155,20 @@ export default function StoryItem({ story, rank, theme }) {
               cursor: 'pointer',
               padding: 4,
               transform: isBookmarked ? 'scale(1.2)' : 'scale(1)',
-              transition: 'transform 0.1s',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24"
-              fill={isBookmarked ? '#ff8500' : 'none'}
-              stroke={isBookmarked ? '#ff8500' : (isDark ? '#444' : '#ccc')}
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 22H6C4.89543 22 4 21.1046 4 20M4 20C4 18.8954 4.89543 18 6 18H18C19.1046 18 20 17.1046 20 16V2C20 3.10457 19.1046 4 18 4L10 4C7.17157 4 5.75736 4 4.87868 4.87868C4 5.75736 4 7.17157 4 10V20Z" />
-              <path d="M9 4V12L12 9L15 12V4" />
-              <path d="M18.5 18C18.5 18 17.5 18.7628 17.5 20C17.5 21.2372 18.5 22 18.5 22" />
-            </svg>
+            <img
+              src={BookMarkIcon}
+              alt="bookmark"
+              style={{
+                width: 18,
+                height: 18,
+                opacity: isBookmarked ? 1 : 0.6,
+              }}
+            />
           </button>
 
+          {/* Favourite */}
           <button
             title="Favourite"
             onClick={() => favourites.toggle(story)}
@@ -167,15 +178,18 @@ export default function StoryItem({ story, rank, theme }) {
               cursor: 'pointer',
               padding: 4,
               transform: isFavourited ? 'scale(1.2)' : 'scale(1)',
-              transition: 'transform 0.1s',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24"
-              fill={isFavourited ? '#ff8500' : 'none'}
-              stroke={isFavourited ? '#ff8500' : (isDark ? '#444' : '#ccc')}
-              strokeWidth="1"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              stroke="#141B34"
+              strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              fill={isFavourited ? 'var(--primary-color, #ff8500)' : 'none'}
             >
               <path d="M10.4107 19.9677C7.58942 17.858 2 13.0348 2 8.69444C2 5.82563 4.10526 3.5 7 3.5C8.5 3.5 10 4 12 6C14 4 15.5 3.5 17 3.5C19.8947 3.5 22 5.82563 22 8.69444C22 13.0348 16.4106 17.858 13.5893 19.9677C12.6399 20.6776 11.3601 20.6776 10.4107 19.9677Z" />
             </svg>
