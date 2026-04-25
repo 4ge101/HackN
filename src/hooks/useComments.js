@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { fetchItem, fetchItems } from "../services/hnApi";
-import useStore from "../store/useStore";
 
 async function buildCommentTree(ids, depth = 0, maxDepth = 4) {
   if (!ids || ids.length === 0 || depth > maxDepth) return [];
@@ -20,8 +19,6 @@ export function useComments(id) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { getItem, setItem } = useStore();
-
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -30,13 +27,8 @@ export function useComments(id) {
       setLoading(true);
       setError(null);
       try {
-        let item = getItem(Number(id));
-        if (!item) {
-          item = await fetchItem(id);
-          setItem(item);
-        }
+        const item = await fetchItem(id);
         if (!cancelled) setStory(item);
-
         const tree = await buildCommentTree(item.kids ?? []);
         if (!cancelled) setComments(tree);
       } catch (err) {

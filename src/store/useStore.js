@@ -4,14 +4,18 @@ const useStore = create((set, get) => ({
   itemCache: {},
   userCache: {},
 
-  setItem: (item) =>
-    set((s) => ({ itemCache: { ...s.itemCache, [item.id]: item } })),
+  setItem: (item) => {
+    if (!item) return;
+    set((s) => ({ itemCache: { ...s.itemCache, [item.id]: item } }));
+  },
 
-  setUser: (user) =>
-    set((s) => ({ userCache: { ...s.userCache, [user.id]: user } })),
+  cacheUser: (user) => {
+    if (!user) return;
+    set((s) => ({ userCache: { ...s.userCache, [user.id]: user } }));
+  },
 
   getItem: (id) => get().itemCache[id],
-  getUser: (id) => get().userCache[id],
+  getCachedUser: (id) => get().userCache[id],
 
   feeds: {},
   setFeed: (feedKey, data) =>
@@ -20,3 +24,4 @@ const useStore = create((set, get) => ({
 }));
 
 export default useStore;
+``
