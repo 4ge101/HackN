@@ -88,6 +88,7 @@ export default function StoryItem({ story, rank, theme }) {
             >
               {story.title}
             </span>
+
             {domain && (
               <span style={{ fontSize: 11, color: isDark ? "#444" : "#bbb" }}>
                 ({domain})
@@ -139,7 +140,10 @@ export default function StoryItem({ story, rank, theme }) {
                 color: "var(--primary-color, #ff8500)",
                 cursor: "pointer",
               }}
-              onClick={() => navigate(`/user/${story.by}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/user/${story.by}`);
+              }}
             >
               {story.by}
             </span>
@@ -148,13 +152,17 @@ export default function StoryItem({ story, rank, theme }) {
             <span>·</span>
             <span
               style={{ cursor: "pointer" }}
-              onClick={() => navigate(`/item/${story.id}`)}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(`/item/${story.id}`);
+              }}
             >
               {story.descendants ?? 0} comments
             </span>
           </div>
         </div>
 
+        {/* Action icons */}
         <div
           style={{
             display: "flex",
@@ -167,6 +175,7 @@ export default function StoryItem({ story, rank, theme }) {
             transition: "opacity 0.15s",
           }}
         >
+          {/* Note */}
           <button
             title="Add note"
             onClick={() => setShowNote(true)}
@@ -180,14 +189,11 @@ export default function StoryItem({ story, rank, theme }) {
             <img
               src={NoteIcon}
               alt="note"
-              style={{
-                width: 18,
-                height: 18,
-                opacity: hasNoteFlag ? 1 : 0.6,
-              }}
+              style={{ width: 18, height: 18, opacity: hasNoteFlag ? 1 : 0.6 }}
             />
           </button>
 
+          {/* Bookmark */}
           <button
             title="Bookmark (b)"
             onClick={() => bookmarks.toggle(story)}
@@ -197,19 +203,17 @@ export default function StoryItem({ story, rank, theme }) {
               cursor: "pointer",
               padding: 4,
               transform: isBookmarked ? "scale(1.2)" : "scale(1)",
+              transition: "transform 0.15s",
             }}
           >
             <img
               src={BookMarkIcon}
               alt="bookmark"
-              style={{
-                width: 18,
-                height: 18,
-                opacity: isBookmarked ? 1 : 0.6,
-              }}
+              style={{ width: 18, height: 18, opacity: isBookmarked ? 1 : 0.6 }}
             />
           </button>
 
+          {/* Favourite — fixed stroke color for dark/light mode */}
           <button
             title="Favourite"
             onClick={() => favourites.toggle(story)}
@@ -219,6 +223,7 @@ export default function StoryItem({ story, rank, theme }) {
               cursor: "pointer",
               padding: 4,
               transform: isFavourited ? "scale(1.2)" : "scale(1)",
+              transition: "transform 0.15s",
             }}
           >
             <svg
@@ -226,7 +231,13 @@ export default function StoryItem({ story, rank, theme }) {
               viewBox="0 0 24 24"
               width="18"
               height="18"
-              stroke="#141B34"
+              stroke={
+                isFavourited
+                  ? "var(--primary-color, #ff8500)"
+                  : isDark
+                    ? "#666"
+                    : "#aaa"
+              }
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
