@@ -1,9 +1,18 @@
-Hacker News Client (HackN)
+# HackN - Hacker News Client
 
-HackN or Hacker News Client Website it is a news website that show the tech news that what happening i use hackn API that are available also do some changes like custom ui theme changing colors side bar navigation and many more
+A custom Hacker News reader built with React + Vite.
 
-Features
+## Why I built this
+I use Hacker News daily but the default site feels outdated on mobile. 
+Built this to practice React and make HN actually usable on my phone.
 
-Intractive Ui
-Navigation 
-Multiple pages etc
+## Features
+- Sidebar navigation for Home/Trending/Bookamrks/Favourites
+- Dark mode and light mode for better expoerience
+- Toggle with keyboards
+- Custome keys like c for comments o for open j/k for up down b for bookamrks
+
+## Setup
+
+bun install
+bun run dev
