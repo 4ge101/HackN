@@ -14,5 +14,5 @@ Built this to practice React and make HN actually usable on my phone.
 
 ## Setup
 
-bun install
+bun install <br>
 bun run dev
